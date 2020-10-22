@@ -1,0 +1,41 @@
+syntax = "proto3";
+package fact;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+
+option java_package = "io.github.fact";
+option java_multiple_files = true;
+option java_outer_classname = "Trace";
+option optimize_for = LITE_RUNTIME;
+
+
+message Trace {
+    string ID = 1;
+    string ChildOf = 2;
+    google.protobuf.Timestamp Timestamp = 3;
+
+    string ContainerID  = 4;
+    string HostID = 5;
+
+    google.protobuf.Timestamp BootTime = 6;
+    float Cost = 7;
+
+    google.protobuf.Timestamp StartTime = 8;
+    int32 Status = 9;
+    google.protobuf.Timestamp EndTime = 10;
+
+    string Platform = 11;
+    string Region  = 12;
+    string Runtime  = 13;
+    int32 Memory  = 14;
+
+    google.protobuf.Duration ExecutionLatency = 15;
+
+    map<string, string> Env = 16;
+    map<string, string> Tags = 17;
+    map<uint64, string> Logs = 18;
+    repeated string Args = 19;
+
+
+}
