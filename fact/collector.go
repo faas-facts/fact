@@ -105,7 +105,7 @@ func (c *ResultCollector) GetTraces() []*Trace {
 }
 
 func (c *ResultCollector) startObservers() {
-	for _, t := range c.traces {
+	for t := range c.updates {
 		for _, observer := range c.observers {
 			observer.Observe(t)
 		}

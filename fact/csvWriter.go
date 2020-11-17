@@ -7,11 +7,13 @@ import (
 )
 
 type CSVWriter struct {
-	sink io.Writer
+	sink   io.Writer
+	append bool
 }
 
-func (c *CSVWriter) Open(writer io.Writer) {
+func (c *CSVWriter) Open(writer io.Writer, append bool) {
 	c.sink = writer
+	c.append = append
 }
 
 func NewCSVWriter() TraceWriter {
@@ -57,11 +59,13 @@ func (c *CSVWriter) Write(traces []*Trace) error {
 	}
 
 	w := csv.NewWriter(c.sink)
+	if !c.append {
+		err := w.Write(header)
 
-	err := w.Write(header)
-
-	if err != nil {
-		return err
+		if err != nil {
+			return err
+		}
+		c.append = true
 	}
 
 	for _, t := range traces {
