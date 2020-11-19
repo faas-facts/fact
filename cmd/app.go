@@ -49,9 +49,12 @@ func CreateWriterOrFail(cmd *cobra.Command, args []string) {
 
 	_, err := os.Stat(file)
 	var f *os.File
+	var append bool
 	if err != nil {
+		append = false
 		f, err = os.Create(file)
 	} else {
+		append = true
 		f, err = os.Open(file)
 	}
 
@@ -59,7 +62,7 @@ func CreateWriterOrFail(cmd *cobra.Command, args []string) {
 		log.Fatalf("could not open output %s - %+v", file, err)
 	}
 
-	writer.Open(f)
+	writer.Open(f, append)
 
 }
 
