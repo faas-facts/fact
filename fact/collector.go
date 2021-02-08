@@ -20,7 +20,7 @@ type ResultCollector struct {
 	updates   chan *Trace
 }
 
-func newCollector() *ResultCollector {
+func NewCollector() *ResultCollector {
 	rc := &ResultCollector{
 		traces:    make([]*Trace, 0),
 		observers: make([]TraceObserver, 0),

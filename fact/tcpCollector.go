@@ -40,7 +40,7 @@ type TCPCollector struct {
 }
 
 func NewTCPCollector(port, worker, maxConnections int) *TCPCollector {
-	base := newCollector()
+	base := NewCollector()
 	collector := &TCPCollector{
 		ResultCollector: base,
 		pool:            newPool(worker, maxConnections, base.Decode),
