@@ -18,14 +18,21 @@ Find the protobuf specification for the trace exchange format at  [fact/trace.pr
 | HostID | string | a unique string identifying a function host, can be empty for FaaS platforms that can't be fingerprinted|
 | BootTime | Time | the time a function was first started. This time states the same for a warm function | 
 | Cost | float | accumulated cost of a function execution at this time | 
+| RequestStartTime | Time | time the request started (sending of first byte) |
 | StartTime | Time | the time a function invocation started | 
 | Status | HTTP Code | the result of a function invocation, encoded as a HTTP Code | 
 | EndTime | Time | the time a function invocation finished | 
+| RequestEndTime | Time | the time the last byte of the request is received |
+| CodeVersion | string| unique version of the deployed artefact (should increase only for code change)|
+| ConfigVersion | string | unique version of the deployed configuration (should change if part of the direct configuration is changed) |
 | Platform | `[A-Z]^{2,4}` | Platform identifier string, e.g., AWS for AWS Lambda Functions. |
 | Region | string | Cloud region name the function is running at. Naming depends on the cloud provider | 
 | Runtime | `(kernel) (kernel version) (Runtime) (Runtime Version)`| the system fingerprint string. Should contain the kernel, runtime (Python), runtime version (2.7) |
 | Memory | `[1-9]^{5}` | Amount of allocated function memory. | 
 | ExecutionLatency| Duration in ns | current execution duration for this trace. | 
+| RequestResponseLatency | Duration in ns | duration from sending the request until receiving the last byte of the request |
+| ExecutionDelay | Duration in ns | duration from send the last byte of an request to the start of the execution |
+| TransportDelay | Duration in ns | duration from returning the response to receiving the first byte of response |
 | Env | map | collection of environment variables available to the function | 
 | Tags | map | user defined tags for this trace | 
 | Logs | map | map of timestamps and user define log messages | 
@@ -53,7 +60,7 @@ Find the protobuf specification for the trace exchange format at  [fact/trace.pr
     }
 ```
 
-Fact Libaries use 4 distinct life-cycle methods:
+Fact Libraries use 4 distinct life-cycle methods:
  - boot: collect basic environment information of this function and opens the collector transport
  - start: logs the start of each invocation, important for `StartTime`
  - update: optional method that allows the developer to add log messages and tags during execution

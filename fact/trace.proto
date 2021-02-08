@@ -11,31 +11,63 @@ option optimize_for = LITE_RUNTIME;
 
 
 message Trace {
+    //unique identifier of this trace
     string ID = 1;
+    //a reference to the invoking function, can be empty
     string ChildOf = 2;
+    //time this trace was created
     google.protobuf.Timestamp Timestamp = 3;
 
+    //unique identifier of the computation runtime
     string ContainerID  = 4;
+    //unique identifier for the computation host
     string HostID = 5;
 
+    //the first time the computation runtime was started
     google.protobuf.Timestamp BootTime = 6;
+    //cost for the execution
     float Cost = 7;
 
+    //time the request started (sending of first byte)
+    google.protobuf.Timestamp RequestStartTime = 21;
+    //time the execution started
     google.protobuf.Timestamp StartTime = 8;
+    //return status, analogous to http status codes
     int32 Status = 9;
+    //time the execution completed
     google.protobuf.Timestamp EndTime = 10;
+    //time the first byte of the request is received
+    google.protobuf.Timestamp RequestEndTime = 22;
 
+    //unique version of the deployed artefact (should increase only for code change)
+    string CodeVersion = 25;
+    //unique version of the deployed configuration (should change if part of the direct configuration is changed)
+    string ConfigVersion = 26;
+    //platform identifier
     string Platform = 11;
+    //region identifier
     string Region  = 12;
+    //runtime identifier, including a version
     string Runtime  = 13;
+    //configured available memory
     int32 Memory  = 14;
 
+    //Time before an execution
+    google.protobuf.Duration ExecutionDelay = 23;
+    //duration of execution
     google.protobuf.Duration ExecutionLatency = 15;
+    //time until the result is send to the receiver
+    google.protobuf.Duration TransportDelay = 24;
+    //duration from sending the request until receiving the last byte of the request
+    google.protobuf.Duration RequestResponseLatency = 20;
 
+    //map of set enviroment variables. CAUTION, this can contain senstive information only populate if necessary!
     map<string, string> Env = 16;
+    //flexible set of tags than can be used as a ad-hoc extension (will be ignored by most collectors)
     map<string, string> Tags = 17;
+    //logs that can be set during execution. CAUTION use sparingly as it increase the size of the trace
     map<uint64, string> Logs = 18;
+    //strings that can be added to the trace, useful to collect execution results. CAUTION use sparingly as it increase the size of the trace
     repeated string Args = 19;
-
 
 }

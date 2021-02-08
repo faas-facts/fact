@@ -16,7 +16,7 @@ func TestCSVWriter_ToConsole(t *testing.T) {
 	csv := fact.NewCSVWriter()
 
 	var b bytes.Buffer
-	csv.Open(&b)
+	csv.Open(&b, false)
 
 	traces := GenSampleTraces()
 

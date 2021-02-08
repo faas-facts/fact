@@ -7,7 +7,7 @@ import (
 type Platform string
 
 const (
-	AWS Platform = "AWS" //AWS Lambda
+	AWS Platform = "AWS" // AWS Lambda
 	ICF          = "ICF" // IBM Cloud Functions
 	GCF          = "GCF" // Google Cloud Functions
 	ACF          = "ACF" // Microsoft Azure Cloud Functions

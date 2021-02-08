@@ -20,7 +20,7 @@ func init() {
 	logger.Formatter = new(prefixed.TextFormatter)
 	logger.SetLevel(logrus.DebugLevel)
 	log = logger.WithFields(logrus.Fields{
-		"prefix": "req-mon",
+		"prefix": "fact",
 		"build":  Build,
 	})
 }

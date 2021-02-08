@@ -26,8 +26,10 @@ func (c *CSVWriter) Name() string {
 
 func (c *CSVWriter) header() []string {
 	return []string{
-		"ID", "ChildOf", "Timestamp", "CId", "HId", "CStart", "ECost", "EStart", "ECode", "EEnd",
-		"Provider", "Region", "COs", "CMem", "ELat",
+		"ID", "ChildOf", "Timestamp", "CId", "HId", "CStart",
+		"ECost", "RStart", "EStart", "ECode", "EEnd", "REnd",
+		"Version", "CVersion", "Provider", "Region",
+		"COs", "CMem", "ELat", "RLat", "DLat", "TLat",
 	}
 }
 
@@ -70,23 +72,34 @@ func (c *CSVWriter) Write(traces []*Trace) error {
 
 	for _, t := range traces {
 		record := make([]string, length)
-		//"ID","ChildOf","Timestamp","CId","HId","CStart","ECost","EStart","ECode","EEnd",
-		//		"Provider","Region","COs","CMem","ELat",
+		//"ID", "ChildOf", "Timestamp",
 		record[0] = t.ID
 		record[1] = t.ChildOf
 		record[2] = strconv.FormatInt(t.StartTime.GetSeconds(), 10)
+		//"CId", "HId", "CStart",
 		record[3] = t.ContainerID
 		record[4] = t.HostID
 		record[5] = strconv.FormatInt(t.BootTime.GetSeconds(), 10)
+		//"ECost", "RStart","EStart",
 		record[6] = strconv.FormatFloat(float64(t.Cost), 'E', -1, 32)
-		record[7] = strconv.FormatInt(t.StartTime.GetSeconds(), 10)
-		record[8] = string(t.Status)
-		record[9] = strconv.FormatInt(t.EndTime.GetSeconds(), 10)
-		record[10] = t.Platform
-		record[11] = t.Region
-		record[12] = t.Runtime
-		record[13] = string(t.Memory)
-		record[14] = strconv.FormatInt(int64(t.ExecutionLatency.AsDuration()), 10)
+		record[7] = strconv.FormatInt(t.RequestStartTime.GetSeconds(), 10)
+		record[8] = strconv.FormatInt(t.StartTime.GetSeconds(), 10)
+		//"ECode", "EEnd","REnd",
+		record[9] = string(t.Status)
+		record[10] = strconv.FormatInt(t.EndTime.GetSeconds(), 10)
+		record[11] = strconv.FormatInt(t.RequestEndTime.GetSeconds(), 10)
+		//"Version","CVersion","Provider", "Region",
+		record[12] = t.CodeVersion
+		record[13] = t.ConfigVersion
+		record[14] = t.Platform
+		record[15] = t.Region
+		//"COs", "CMem", "ELat","RLat","DLat","TLat",
+		record[16] = t.Runtime
+		record[17] = string(t.Memory)
+		record[18] = strconv.FormatInt(int64(t.ExecutionLatency.AsDuration()), 10)
+		record[19] = strconv.FormatInt(int64(t.RequestResponseLatency.AsDuration()), 10)
+		record[20] = strconv.FormatInt(int64(t.ExecutionDelay.AsDuration()), 10)
+		record[21] = strconv.FormatInt(int64(t.TransportDelay.AsDuration()), 10)
 
 		for k, v := range t.Env {
 			record[envMap[k]] = v
