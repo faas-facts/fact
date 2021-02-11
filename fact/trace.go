@@ -14,6 +14,16 @@ const (
 	OW           = "OW"  // OpenWhisk
 )
 
+func NewTrace() Trace {
+	m := Trace{
+		Env:  make(map[string]string),
+		Tags: make(map[string]string),
+		Logs: make(map[uint64]string),
+		Args: make([]string, 0),
+	}
+	return m
+}
+
 //merge a partial trace with the same TraceID to this trace. Older timestamps have precidence.
 func (t *Trace) Merge(partial *Trace) error {
 	if t.ID != partial.ID {
