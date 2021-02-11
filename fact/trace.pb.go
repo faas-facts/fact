@@ -41,7 +41,7 @@ type Trace struct {
 	RequestStartTime *timestamp.Timestamp `protobuf:"bytes,21,opt,name=RequestStartTime,proto3" json:"RequestStartTime,omitempty"`
 	//time the execution started
 	StartTime *timestamp.Timestamp `protobuf:"bytes,8,opt,name=StartTime,proto3" json:"StartTime,omitempty"`
-	//retrun status, analogous to http status codes
+	//return status, analogous to http status codes
 	Status int32 `protobuf:"varint,9,opt,name=Status,proto3" json:"Status,omitempty"`
 	//time the execution completed
 	EndTime *timestamp.Timestamp `protobuf:"bytes,10,opt,name=EndTime,proto3" json:"EndTime,omitempty"`
