@@ -5,7 +5,7 @@
 
 <!-- ![GIF demo](img/demo.gif) -->
 
-Currently supports: AWS Lambda, OpenWhisk, IBM Cloud Functions, Goolge Cloud Functions, Azure Functions 
+Currently, supports: AWS Lambda, OpenWhisk, IBM Cloud Functions, Google Cloud Functions, Azure Functions 
 
 **Usage**
 ---
@@ -32,8 +32,8 @@ Flags:
 
 ### Library
 
-The fact libary offers multiple way to extend collectors and output formats.
-All libaries use the golang io.Reader/io.Writer interfaces for input and output.
+The fact library offers multiple way to extend collectors and output formats.
+All libraries use the golang io.Reader/io.Writer interfaces for input and output.
 
 If you want to use an existing collector and programmatically react to new traces you can also implement a TraceObserver:
 ```
@@ -67,5 +67,5 @@ For a detailed overview of provided [collectors]() or [output formats]() have a 
 
 **Acknowledgements**
 ---
-
-<!-- TODO -->
+Fact is under the MIT license, for more check [License](./License).
+This project was in part created in the [SMILE Project](https://ise-smile.github.io/) funded by the German Federal Ministry of Education and Research. 
